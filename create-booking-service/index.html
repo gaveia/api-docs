@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Create Booking Service - PropertyHub API Services</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Create Booking Service";
+        var mkdocs_page_input_path = "create-booking-service.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> PropertyHub API Services
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../best-practices/">Best practice</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Create Booking Service</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#description">Description</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#no-guarantee-payment-method-no_guarantee">No Guarantee payment method ("no_guarantee")</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#bank-transfer-payment-method-bank_transfer">Bank Transfer payment method ("bank_transfer")</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#credit-card-vpp-payment-method-credit_card_vpp">Credit Card VPP payment method ("credit_card_vpp")</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#credit-card-ota-payment-method-credit_card">Credit Card OTA payment method ("credit_card")</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#credit-card-ota">Credit Card OTA</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#credit-card-vpp">Credit Card VPP</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../get-booking-service/">Get Booking Service</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">PropertyHub API Services</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Create Booking Service</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="create-booking-service">Create Booking Service</h1>
+<p><a href="https://propertyhub.gaveia.com/partner-api/index.html#/default/post_booking_create">Swagger documentation</a><br>
+Create a new booking by posting booking data to “/booking/create” endpoint. The "bookingId" is returned.</p>
+<h2 id="description">Description</h2>
+<p>How to fill the booking data depends on the selected payment method. The allowed payment methods are defined at the price list level and are retrieved from the response of the "/accommodation/availability" service. Below is a short description of each payment method.</p>
+<h3 id="no-guarantee-payment-method-no_guarantee">No Guarantee payment method ("no_guarantee")</h3>
+<p>The reservation will be created in the system, no deposit or credit card guarantee required.</p>
+<h3 id="bank-transfer-payment-method-bank_transfer">Bank Transfer payment method ("bank_transfer")</h3>
+<p>The reservation will be created in the system, and the guest is required to make the payment via bank transfer within the due defined in the booking conditions.</p>
+<h3 id="credit-card-vpp-payment-method-credit_card_vpp">Credit Card VPP payment method ("credit_card_vpp")</h3>
+<p>With this payment method, the payment is processed on our side. We use an external payment gateway to which the user needs to be redirected to complete the payment. Upon successful payment, the user will be redirected to the reservation confirmation page; otherwise, they will be redirected to an error page.</p>
+<p>The /booking/create service response will return a "redirectUrl" string, which should be used to redirect the user for payment completion.</p>
+<p>The required parameters for this payment method are the redirect URLs, which determine where the user will be redirected based on the payment outcome:
+<br></p>
+<pre><code>&quot;paymentMethod&quot;: &quot;credit_card_vpp&quot;,
+&quot;redirectUrl&quot;: &quot;https://example.com/booking-confirmation&quot;,
+&quot;cancelPaymentRedirectUrl&quot;: &quot;https://example.com/booking-failed&quot;,
+</code></pre>
+<p><strong>Note:</strong> <em>This request should not include credit card details, nor should they be collected on the client side.</em></p>
+<h3 id="credit-card-ota-payment-method-credit_card">Credit Card OTA payment method ("credit_card")</h3>
+<p>In this payment method, the data is collected on the client side, and valid data must be sent through the booking data in the request. Attention should be paid to the allowed card types.</p>
+<p>The required fields are:
+<br></p>
+<pre><code>&quot;paymentMethod&quot;: &quot;credit_card&quot;,
+&quot;creditCardFirstName&quot;: &quot;John&quot;,
+&quot;creditCardLastName&quot;: &quot;Doe&quot;,
+&quot;creditCardType&quot;: &quot;VISA&quot;,
+&quot;creditCardNo&quot;: &quot;4111111111111111&quot;,
+&quot;creditCardVerificationCode&quot;: &quot;123&quot;,
+&quot;creditCardValidThroughMonth&quot;: &quot;08&quot;,
+&quot;creditCardValidThroughYear&quot;: 2025,
+</code></pre>
+<p><strong>Note:</strong> <em>Partners connecting to our API will not need to use this payment method because they can only access properties that are in the VPP type of partnership.</em></p>
+<h2 id="examples">Examples</h2>
+<p><strong>Note:</strong> <em>For testing, set the parameter "test" to true.</em></p>
+<h3 id="credit-card-ota">Credit Card OTA</h3>
+<p>Request:
+<br></p>
+<pre><code>{
+  &quot;accommodationReference&quot;: &quot;61238f3b1b82b658ac5919f1&quot;,
+  &quot;priceListReference&quot;: &quot;669710af5af7adef1b06b3dc&quot;,
+  &quot;language&quot;: &quot;en&quot;,
+  &quot;arrival&quot;: &quot;20250606&quot;,
+  &quot;departure&quot;: &quot;20250613&quot;,
+  &quot;adults&quot;: 2,
+  &quot;children&quot;: 1,
+  &quot;childrenAges&quot;: [
+    {
+      &quot;age&quot;: 2
+    }
+  ],
+  &quot;pets&quot;: 0,
+  &quot;clientFirstName&quot;: &quot;John&quot;,
+  &quot;clientLastName&quot;: &quot;Doe&quot;,
+  &quot;clientEmail&quot;: &quot;john-doe@gmail.com&quot;,
+  &quot;clientPhone&quot;: &quot;355152255&quot;,
+  &quot;clientCountry&quot;: &quot;Croatia&quot;,
+  &quot;clientCountryCode&quot;: &quot;HR&quot;,
+  &quot;paymentMethod&quot;: &quot;credit_card&quot;,
+  &quot;vehicleType&quot;: &quot;&quot;,
+  &quot;vehicleLength&quot;: &quot;&quot;,
+  &quot;comment&quot;: &quot;Test reservation&quot;,
+  &quot;guests&quot;: [],
+  &quot;services&quot;: [],
+  &quot;creditCardFirstName&quot;: &quot;John&quot;,
+  &quot;creditCardLastName&quot;: &quot;Doe&quot;,
+  &quot;creditCardType&quot;: &quot;VISA&quot;,
+  &quot;creditCardNo&quot;: &quot;4111111111111111&quot;,
+  &quot;creditCardVerificationCode&quot;: &quot;123&quot;,
+  &quot;creditCardValidThroughMonth&quot;: &quot;08&quot;,
+  &quot;creditCardValidThroughYear&quot;: 2027,
+  &quot;propertyDamageInsurance&quot;: false,
+  &quot;test&quot;: true
+}
+</code></pre>
+<p>Response:
+<br></p>
+<pre><code>{
+  &quot;success&quot;: true,
+  &quot;bookingId&quot;: &quot;67a210aff33f7280ba0fa0f3&quot;
+}
+</code></pre>
+<h3 id="credit-card-vpp">Credit Card VPP</h3>
+<p>Request:
+<br></p>
+<pre><code>{
+  &quot;accommodationReference&quot;: &quot;6123919c1b82b658ac67a317&quot;,
+  &quot;priceListReference&quot;: &quot;66ed516f72169adcf503d85e&quot;,
+  &quot;language&quot;: &quot;en&quot;,
+  &quot;arrival&quot;: &quot;20250606&quot;,
+  &quot;departure&quot;: &quot;20250613&quot;,
+  &quot;adults&quot;: 2,
+  &quot;children&quot;: 1,
+  &quot;childrenAges&quot;: [
+    {
+      &quot;age&quot;: 2
+    }
+  ],
+  &quot;pets&quot;: 0,
+  &quot;clientFirstName&quot;: &quot;John&quot;,
+  &quot;clientLastName&quot;: &quot;Doe&quot;,
+  &quot;clientEmail&quot;: &quot;john-doe@gmail.com&quot;,
+  &quot;clientPhone&quot;: &quot;355152255&quot;,
+  &quot;clientCountry&quot;: &quot;Croatia&quot;,
+  &quot;clientCountryCode&quot;: &quot;HR&quot;,
+  &quot;paymentMethod&quot;: &quot;credit_card_vpp&quot;,
+  &quot;vehicleType&quot;: &quot;&quot;,
+  &quot;vehicleLength&quot;: &quot;&quot;,
+  &quot;comment&quot;: &quot;Test reservation&quot;,
+  &quot;guests&quot;: [],
+  &quot;services&quot;: [],
+  &quot;propertyDamageInsurance&quot;: false,
+  &quot;test&quot;: true,
+&quot;redirectUrl&quot;: &quot;https://example.com/booking-confirmation&quot;,
+&quot;cancelPaymentRedirectUrl&quot;: &quot;https://example.com/booking-failed&quot;
+}
+</code></pre>
+<p>Response:
+<br></p>
+<pre><code>{
+  &quot;success&quot;: true,
+  &quot;bookingId&quot;: &quot;67a2130b2725ccf0d40e2ac3&quot;,
+  &quot;redirectUrl&quot;: &quot;http://propertyhub.local/front/payment/?id=67a2130b2725ccf0d40e2ac3&amp;apiSourceName=test1&quot;
+}
+</code></pre>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href="../best-practices/" class="btn btn-neutral float-left" title="Best practice"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../get-booking-service/" class="btn btn-neutral float-right" title="Get Booking Service">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href="../best-practices/" style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../get-booking-service/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>

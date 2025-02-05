@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <link rel="shortcut icon" href="../img/favicon.ico" />
+    <title>Best practice - PropertyHub API Services</title>
+    <link rel="stylesheet" href="../css/theme.css" />
+    <link rel="stylesheet" href="../css/theme_extra.css" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css" />
+    
+      <script>
+        // Current page data
+        var mkdocs_page_name = "Best practice";
+        var mkdocs_page_input_path = "best-practices.md";
+        var mkdocs_page_url = null;
+      </script>
+    
+    <!--[if lt IE 9]>
+      <script src="../js/html5shiv.min.js"></script>
+    <![endif]-->
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/highlight.min.js"></script>
+      <script>hljs.highlightAll();</script> 
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side stickynav">
+    <div class="wy-side-scroll">
+      <div class="wy-side-nav-search">
+          <a href=".." class="icon icon-home"> PropertyHub API Services
+        </a><div role="search">
+  <form id ="rtd-search-form" class="wy-form" action="../search.html" method="get">
+      <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" title="Type search term here" />
+  </form>
+</div>
+      </div>
+
+      <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="..">Home</a>
+                </li>
+              </ul>
+              <ul class="current">
+                <li class="toctree-l1 current"><a class="reference internal current" href="#">Best practice</a>
+    <ul class="current">
+    <li class="toctree-l2"><a class="reference internal" href="#api-usage-overview">API Usage Overview</a>
+        <ul>
+    <li class="toctree-l3"><a class="reference internal" href="#retrieve-a-list-of-accommodation-units">Retrieve a List of Accommodation Units</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#retrieve-specific-camp-data">Retrieve Specific Camp Data</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#retrieve-data-for-individual-accommodation-units">Retrieve Data for Individual Accommodation Units</a>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#availability-search">Availability Search</a>
+        <ul>
+    <li class="toctree-l4"><a class="reference internal" href="#general-availability-search">General Availability Search</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#single-accommodation-availability">Single Accommodation Availability</a>
+    </li>
+    <li class="toctree-l4"><a class="reference internal" href="#accommodation-unit-calendar">Accommodation Unit Calendar</a>
+    </li>
+        </ul>
+    </li>
+    <li class="toctree-l3"><a class="reference internal" href="#booking">Booking</a>
+    </li>
+        </ul>
+    </li>
+    </ul>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../create-booking-service/">Create Booking Service</a>
+                </li>
+              </ul>
+              <ul>
+                <li class="toctree-l1"><a class="reference internal" href="../get-booking-service/">Get Booking Service</a>
+                </li>
+              </ul>
+      </div>
+    </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" role="navigation" aria-label="Mobile navigation menu">
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="..">PropertyHub API Services</a>
+        
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content"><div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href=".." class="icon icon-home" aria-label="Docs"></a></li>
+      <li class="breadcrumb-item active">Best practice</li>
+    <li class="wy-breadcrumbs-aside">
+    </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div class="section" itemprop="articleBody">
+              
+                <h1 id="best-practices-for-integration">Best Practices for Integration</h1>
+<p>To optimize traffic and performance, we recommend the following practices when working with accommodation data and images:</p>
+<ul>
+<li>Store accommodation data locally (except for availability and pricing data) to reduce server traffic.</li>
+<li>Download images locally to minimize unnecessary requests to our server.</li>
+</ul>
+<h2 id="api-usage-overview">API Usage Overview</h2>
+<h3 id="retrieve-a-list-of-accommodation-units">Retrieve a List of Accommodation Units</h3>
+<p><a href="https://propertyhub.gaveia.com/partner-api/index.html#/default/get_accommodations_list">Swagger documentation</a><br>
+To get a list of campsites and accommodation units, use the accommodations/list endpoint.</p>
+<h3 id="retrieve-specific-camp-data">Retrieve Specific Camp Data</h3>
+<p>For details for a specific campsite, use the /camp/data endpoint. In the URL, provide the language and ID parameters. Supported languages are: <em>"en", "de", "it", "nl", "hr"</em>.</p>
+<h3 id="retrieve-data-for-individual-accommodation-units">Retrieve Data for Individual Accommodation Units</h3>
+<p>The data for individual accommodation units varies by unit type.<br>
+For mobile home use: <a href="https://propertyhub.gaveia.com/partner-api/index.html#/default/post_accommodation_mobile_home">Mobile homes endpoint</a><br>
+For pitch use: <a href="https://propertyhub.gaveia.com/partner-api/index.html#/default/post_accommodation_pitch">Pitch endpoint</a><br>
+For glamping use: <a href="https://propertyhub.gaveia.com/partner-api/index.html#/default/post_accommodation_glamping">Glampings endpoint</a><br>
+For apartment use: <a href="https://propertyhub.gaveia.com/partner-api/index.html#/default/post_accommodation_apartment">Apartments endpoint</a><br></p>
+<h3 id="availability-search">Availability Search</h3>
+<p>We have two main endpoints for checking availability:</p>
+<h4 id="general-availability-search">General Availability Search</h4>
+<p><a href="https://propertyhub.gaveia.com/partner-api/index.html#/default/post_accommodations_search">Swagger documentation</a><br>
+This endpoint is used when you need to check the availability for multiple accommodation units at once. It is allowed to call it for each unique availability search.</p>
+<h4 id="single-accommodation-availability">Single Accommodation Availability</h4>
+<p><a href="https://propertyhub.gaveia.com/partner-api/index.html#/default/post_accommodation_availability">Swagger documentation</a><br>
+To get the most up-to-date availability and pricing for a single accommodation unit, use this endpoint. It's essential for when entering the booking process, as it provides real-time data.</p>
+<h4 id="accommodation-unit-calendar">Accommodation Unit Calendar</h4>
+<p><a href="https://propertyhub.gaveia.com/partner-api/index.html#/default/post_accommodation_get_calendar">Swagger documentation</a><br>
+The calendar request can be used to retrieve the daily prices for a specific accommodation unit. The response will only include the available days. This data can also be downloaded locally, and the total price calculation can be performed on your side.<br>
+<strong>Notes:</strong> <em>The obtained price is in some cases the base price, without including additional charges, and the total prices may not match the prices obtained through the real-time availability check request, on which the reservation must be based.</em><br>
+<strong>Note:</strong> <em>If you choose to collect and display prices in this way, you must somehow present to guests that this is the base price, as we are unable to provide the additional charges that are added.</em></p>
+<h3 id="booking">Booking</h3>
+<p>You will receive more details on how to make a reservation in the sections below of the documentation.</p>
+              
+            </div>
+          </div><footer>
+    <div class="rst-footer-buttons" role="navigation" aria-label="Footer Navigation">
+        <a href=".." class="btn btn-neutral float-left" title="Home"><span class="icon icon-circle-arrow-left"></span> Previous</a>
+        <a href="../create-booking-service/" class="btn btn-neutral float-right" title="Create Booking Service">Next <span class="icon icon-circle-arrow-right"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <!-- Copyright etc -->
+  </div>
+
+  Built with <a href="https://www.mkdocs.org/">MkDocs</a> using a <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+</footer>
+          
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <div class="rst-versions" role="note" aria-label="Versions">
+  <span class="rst-current-version" data-toggle="rst-current-version">
+    
+    
+      <span><a href=".." style="color: #fcfcfc">&laquo; Previous</a></span>
+    
+    
+      <span><a href="../create-booking-service/" style="color: #fcfcfc">Next &raquo;</a></span>
+    
+  </span>
+</div>
+    <script src="../js/jquery-3.6.0.min.js"></script>
+    <script>var base_url = "..";</script>
+    <script src="../js/theme_extra.js"></script>
+    <script src="../js/theme.js"></script>
+      <script src="../search/main.js"></script>
+    <script>
+        jQuery(function () {
+            SphinxRtdTheme.Navigation.enable(true);
+        });
+    </script>
+
+</body>
+</html>
