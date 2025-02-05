@@ -1,0 +1,9 @@
+site_name: PropertyHub API Services
+theme: readthedocs
+nav:
+  - Home: index.md
+  - Best practice: best-practices.md
+  - Create Booking Service: create-booking-service.md
+  - Get Booking Service: get-booking-service.md
+
+docs_dir: docs
